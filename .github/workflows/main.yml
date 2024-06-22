@@ -19,7 +19,7 @@ jobs:
           echo "My public IP address is: $my_public_ip"
       - uses: LuisEnMarroquin/setup-ssh-action@v2.0.0
         with:
-          ORIGIN: $my_public_ip
+          ORIGIN: ${{ $my_public_ip }}
           SSHKEY: ${{ secrets.SSH }} # ----- BEGIN RSA PRIVATE KEY----- ...
           NAME: production
           PORT: 22
