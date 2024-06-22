@@ -10,10 +10,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Use curl
-        uses: sozo-design/curl@v1.0.2
-        with:
-          args: https://httpbin.org/get      
+        uses: sozo-design/curl@v1.0.2     
       - run: curl icanhazip.com
+      - name: Get public IP
+        run: |
+          my_public_ip=$(curl -s icanhazip.com)
+          echo "My public IP address is: $my_public_ip"
+      
+
+
 
     # - uses: LuisEnMarroquin/setup-ssh-action@v2.0.0
     #   with:
