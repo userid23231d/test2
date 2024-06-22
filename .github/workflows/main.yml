@@ -14,12 +14,14 @@ jobs:
         run: | 
           my_public_ip=$(curl -s icanhazip.com)
           echo "HOST=$my_public_ip" >> $GITHUB_ENV
+          echo "USERNAME=admin" >> $GITHUB_ENV
+          echo "PASSWORD='$my_public_ip'" >> $GITHUB_ENV
       - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ env.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
+          username: ${{ env.USERNAME }}
+          password: ${{ env.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: whoami
  
