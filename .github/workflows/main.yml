@@ -14,14 +14,18 @@ jobs:
       - run: curl icanhazip.com
         id: get-ip
       - name: Get public IP
-        run: |
+        run: | 
           my_public_ip=$(curl -s icanhazip.com)
-          echo "My public IP address is: $my_public_ip"
+          echo "ORIGIN=$my_public_ip" >> $GITHUB_ENV
       - uses: LuisEnMarroquin/setup-ssh-action@v2.0.0
         with:
-          ORIGIN: ${{ curl -s icanhazip.com }}
+          run: my_public_ip=$(curl -s icanhazip.com)
+                        
+          ORIGIN: ${{ env.ORIGIN }}
+  
           SSHKEY: ${{ secrets.SSH }} # ----- BEGIN RSA PRIVATE KEY----- ...
           NAME: production
           PORT: 22
           USER: admin # admin
       - run: ssh production ls --help
+ 
