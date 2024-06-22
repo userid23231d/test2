@@ -1,12 +1,9 @@
-name: Deployment
-
-on:
-  push:
-    branches:
-      - main
-
+name: remote ssh command
+on: [push]
 jobs:
-  deploy:
+
+  build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - name: Use curl
@@ -16,16 +13,13 @@ jobs:
       - name: Get public IP
         run: | 
           my_public_ip=$(curl -s icanhazip.com)
-          echo "ORIGIN=$my_public_ip" >> $GITHUB_ENV
-      - uses: LuisEnMarroquin/setup-ssh-action@v2.0.0
+          echo "HOST=$my_public_ip" >> $GITHUB_ENV
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@v1.0.3
         with:
-          run: my_public_ip=$(curl -s icanhazip.com)
-                        
-          ORIGIN: ${{ env.ORIGIN }}
-  
-          SSHKEY: ${{ secrets.SSH }} # ----- BEGIN RSA PRIVATE KEY----- ...
-          NAME: production
-          PORT: 22
-          USER: admin # admin
-      - run: ssh production ls --help
+          host: ${{ env.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: whoami
  
