@@ -1,15 +1,15 @@
-name: UBUNTU_SERVER
+name: Deployment
+
 on:
   push:
     branches:
-      - main  
+    - main
+
 jobs:
-  my-job:
+  deploy:
     runs-on: ubuntu-latest
-    container:
-      image: aschmelyun/cleaver:latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Run a command inside the container
-        run: echo "Hello from the Docker container!"
+    - uses: LuisEnMarroquin/setup-ssh-action@v2.0.0
+      with:
+        SSHKEY: ${{ secrets.SSH }} # ----- BEGIN RSA PRIVATE KEY----- ...
+    - run: ssh -T git@github.com || true
