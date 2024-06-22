@@ -9,8 +9,17 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - run: echo "${{ secrets.SSH }}"
-    - uses: LuisEnMarroquin/setup-ssh-action@v2.0.0
-      with:
-        SSHKEY: ${{ secrets.SSH }} # ----- BEGIN RSA PRIVATE KEY----- ...
-    - run: ssh -T git@github.com || true
+      - name: Use curl
+        uses: sozo-design/curl@v1.0.2
+        with:
+          args: https://httpbin.org/get      
+      - run: curl icanhazip.com
+
+    # - uses: LuisEnMarroquin/setup-ssh-action@v2.0.0
+    #   with:
+    #     ORIGIN: ${{ secrets.HOST }} # example.com || 8.8.8.8
+    #     SSHKEY: ${{ secrets.SSH }} # ----- BEGIN RSA PRIVATE KEY----- ...
+    #     NAME: production
+    #     PORT: ${{ secrets.PORT }} # 3000
+    #     USER: ${{ secrets.USER }} # admin
+    # - run: ssh production ls --help
