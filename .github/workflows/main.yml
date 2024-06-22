@@ -15,10 +15,11 @@ jobs:
         id: get-ip
       - name: Get public IP
         run: |
-          my_public_ip=$(echo "${{ steps.get-ip.outputs.stdout }}")
+          my_public_ip=$(curl -s icanhazip.com)
           echo "My public IP address is: $my_public_ip"
       - uses: LuisEnMarroquin/setup-ssh-action@v2.0.0
         with:
+        
           ORIGIN: ${{ env.my_public_ip }}
           SSHKEY: ${{ secrets.SSH }} # ----- BEGIN RSA PRIVATE KEY----- ...
           NAME: production
