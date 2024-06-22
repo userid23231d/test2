@@ -5,10 +5,11 @@ on:
       - main  
 jobs:
   my-job:
-    name: my-job
     runs-on: ubuntu-latest
+    container:
+      image: aschmelyun/cleaver:latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Run a command on Ubuntu
-        run: echo "Hello from Ubuntu!"
+      - name: Run a command inside the container
+        run: echo "Hello from the Docker container!"
