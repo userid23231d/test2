@@ -9,7 +9,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - run: ssh-add -l -E sha256
+    - run: echo "${{ secrets.SSH }}"
     - uses: LuisEnMarroquin/setup-ssh-action@v2.0.0
       with:
         SSHKEY: ${{ secrets.SSH }} # ----- BEGIN RSA PRIVATE KEY----- ...
